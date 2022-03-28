@@ -10,3 +10,6 @@ project.vim
 .project
 .classpath
 .metadata/
+/exercises/src/main/scala/fpinscala/.bsp/sbt.json
+/exercises/src/main/scala/fpinscala/state/State.sc
+/exercises/src/main/scala/fpinscala/laziness/Streams.sc
