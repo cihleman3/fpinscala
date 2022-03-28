@@ -143,6 +143,11 @@ trait Stream[+A] {
     unfold(this, bs)(f)
   }
 
+  // special case of `zipWith`
+  def zip[B](s2: Stream[B]): Stream[(A,B)] =
+    zipWith(s2)((_,_))
+
+
   def zipAll[B](bs: Stream[B]): Stream[(Option[A], Option[B])] = {
     type S = (Stream[A], Stream[B])
     val f: S => Option[((Option[A], Option[B]), S)] = {
@@ -208,6 +213,9 @@ object Stream {
     go(0, 1)
   }
 
+  /** Corecursion. It takes an initial state,
+   * and a function for producing both the next state and the next value in the generated stream.
+   */
   def unfold[A, S](z: S)(f: S => Option[(A, S)]): Stream[A] = {
     f(z).fold(empty[A]) { case (a, s) => cons(a, unfold(s)(f)) }
   }

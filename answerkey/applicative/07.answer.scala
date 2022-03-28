@@ -1,4 +1,5 @@
-We'll just work through left and right identity, but the basic idea for all these proofs is to substitute the definition of all functions, then use the monad laws to make simplifications to the applicative identities. 
+We'll just work through left and right identity, but the basic idea for all these proofs is to substitute the definition of all functions,
+then use the monad laws to make simplifications to the applicative identities.
 
 Let's start with left and right identity:
 

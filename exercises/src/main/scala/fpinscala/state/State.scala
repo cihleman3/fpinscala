@@ -46,6 +46,7 @@ object RNG {
     (j, r)
   }
 
+  // generates a Double between 0 and 1, not including 1
   def double(rng: RNG): (Double, RNG) = {
     val l = Int.MaxValue + 1.0
     val (i, r) = nonNegativeInt(rng)
@@ -144,6 +145,8 @@ case class State[S, +A](run: S => (A, S)) {
     val (a, s2) = run(s)
     f(a).run(s2)
   })
+
+
 }
 
 object State {
@@ -174,7 +177,7 @@ object State {
     l.reverse.foldLeft(unit[S, List[A]](List()))((acc, f) => f.compose(acc)(_ :: _))
 
   // The idiomatic solution is expressed via foldRight
-  def sequenceViaFoldRight[S,A](sas: List[State[S, A]]): State[S, List[A]] =
+  def sequenceViaFoldRight[S, A](sas: List[State[S, A]]): State[S, List[A]] =
     sas.foldRight(unit[S, List[A]](List()))((f, acc) => f.compose(acc)(_ :: _))
 
 }
@@ -183,7 +186,7 @@ object Main extends App {
   val r1: RNG = Simple(42)
   //  val r2: RNG = Simple(112)
   val int2: Rand[Int] = nonNegativeInt
-
+  r1.nextInt
   /*for (_ <- range) {
     val (j, r) = double(r1)
     println(j)

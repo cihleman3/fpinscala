@@ -1,7 +1,7 @@
 package fpinscala.iomonad
 
-import language.higherKinds // Disable warnings for type constructor polymorphism
 import language.implicitConversions
+//import fpinscala.laziness.Stream
 
 trait Functor[F[_]] {
   def map[A,B](a: F[A])(f: A => B): F[B]

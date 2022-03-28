@@ -2,10 +2,12 @@ package fpinscala.parsing
 
 import java.util.regex._
 import scala.util.matching.Regex
+
 import fpinscala.testing._
 import fpinscala.testing.Prop._
 import language.higherKinds
 import language.implicitConversions
+import scala.jdk.CollectionConverters.IteratorHasAsScala
 
 trait Parsers[Parser[+_]] { self => // so inner classes may call methods of trait
   def run[A](p: Parser[A])(input: String): Either[ParseError,A]
@@ -187,9 +189,9 @@ case class Location(input: String, offset: Int = 0) {
   def advanceBy(n: Int) = copy(offset = offset+n)
 
   /* Returns the line corresponding to this location */
-  def currentLine: String = ???
-//    if (input.length > 1) input.lines.drop(line-1).next
-//    else ""
+  def currentLine: String =
+    if (input.length > 1) input.lines.iterator().asScala.drop(line-1).next
+    else ""
 
   def columnCaret = (" " * (col-1)) + "^"
 }

@@ -627,3 +627,11 @@ object IO3 {
       })
     }
 }
+
+object AnswerMain extends App {
+  import IO3._
+
+  val h = Console.printLn("Hello")
+  val t = freeMonad.forever(h)
+  runConsoleFunction0(h)
+}

@@ -1,12 +1,14 @@
 package fpinscala
 package applicative
 
+import fpinscala.laziness.Stream
 import monads.Functor
 import state._
 import State._
 import monoids._
-import language.higherKinds
 import language.implicitConversions
+
+import fpinscala.applicative.Traverse.listTraverse
 
 
 trait Applicative[F[_]] extends Functor[F] {
@@ -86,7 +88,7 @@ object Applicative {
   val streamApplicative = new Applicative[Stream] {
 
     def unit[A](a: => A): Stream[A] =
-      Stream.continually(a) // The infinite, constant stream
+      Stream.constant(a) // The infinite, constant stream
 
     override def map2[A,B,C](a: Stream[A], b: Stream[B])( // Combine elements pointwise
                     f: (A,B) => C): Stream[C] =
@@ -278,5 +280,12 @@ object Traverse {
     }
   }
 }
+
+object AnswerMain extends App {
+  val ls = List("a", "b", "c")
+  val lz = listTraverse.zipWithIndex(ls)
+  println(lz)
+}
+
 
 
